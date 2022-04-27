@@ -5,25 +5,22 @@ tasks:
   - name: Worker
     init: |
       alias tctl="docker exec temporal-admin-tools tctl"
-      echo "tctl configured! try typing tctl -v"
       docker-compose pull
-      gp sync-done dockerpull
     command: |
-      gp sync-await dockerpull
-      gp sync-await server
-      gp await-port 7233 && go run worker/main.go
+      echo "tctl configured! try typing tctl -v"
+      echo "Use this terminal to start your worker."
   - name: Terminal
     init: |
       alias tctl="docker exec temporal-admin-tools tctl"
-      echo "tctl configured! try typing tctl -v"
     command: |
       gp open README.md
-      # gp await-port 8088 && gp preview http://localhost:8088 # open up Temporal Web to show new workflow
+      echo "tctl configured! try typing tctl -v"
+      echo "Use this terminal to run commands"
     openMode: split-right
   - name: Temporal Server
     command: |
       gp sync-await dockerpull
-      docker-compose up -d
+      docker-compose up
     openMode: split-right
 
 ports:
