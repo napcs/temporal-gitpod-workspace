@@ -8,6 +8,7 @@ tasks:
       docker-compose pull
     command: |
       gp sync-done dockerpull
+      clear
       echo "tctl configured! try typing tctl -v"
       echo "Use this terminal to start your worker."
   - name: Terminal
@@ -15,6 +16,7 @@ tasks:
       alias tctl="docker exec temporal-admin-tools tctl"
     command: |
       gp open README.md
+      clear
       echo "tctl configured! try typing tctl -v"
       echo "Use this terminal to run commands"
     openMode: split-right
@@ -29,6 +31,6 @@ ports:
     onOpen: ignore
   - port: 7233 # temporal server
     onOpen: ignore
-  - port: 8088 # temporal web
+  - port: 8080 # temporal web
     onOpen: open-preview
     visibility: public
