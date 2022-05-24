@@ -10,7 +10,7 @@ tasks:
       cd
     command: |
       gp sync-done dockerpull
-      gp await-port 9200
+      gp await-port 7233
       gp preview $(gp url 8080)
       clear
       echo "tctl configured! try typing tctl -v"
@@ -32,8 +32,6 @@ tasks:
     openMode: split-right
 
 ports:
-  - port: 9200 # elastic
-    onOpen: ignore
   - port: 5432 # postgres
     onOpen: ignore
   - port: 7233 # temporal server
