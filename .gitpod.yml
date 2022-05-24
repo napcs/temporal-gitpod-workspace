@@ -10,6 +10,8 @@ tasks:
       cd
     command: |
       gp sync-done dockerpull
+      gp await-port 9200
+      gp preview $(gp url 8080)
       clear
       echo "tctl configured! try typing tctl -v"
       echo "Use this terminal to start your worker."
@@ -37,5 +39,8 @@ ports:
   - port: 7233 # temporal server
     onOpen: ignore
   - port: 8080 # temporal UI
-    onOpen: open-preview
+    onOpen: ignore
+    visibility: public
+  - port: 8088 # temporal legacy UI
+    onOpen: ignore
     visibility: public
