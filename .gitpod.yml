@@ -10,8 +10,6 @@ tasks:
       cd
     command: |
       gp sync-done dockerpull
-      gp await-port 7233
-      gp preview $(gp url 8080)
       clear
       echo "tctl configured! try typing tctl -v"
       echo "Use this terminal to start your worker."
@@ -37,8 +35,16 @@ ports:
   - port: 7233 # temporal server
     onOpen: ignore
   - port: 8080 # temporal UI
-    onOpen: ignore
-    visibility: public
+    onOpen: open-preview
+    visibility: private
   - port: 8088 # temporal legacy UI
     onOpen: ignore
-    visibility: public
+    visibility: private
+
+vscode:
+  extensions:
+    - golang.Go
+    - ms-python.python
+    - redhat.java
+    - vscjava.vscode-java-test
+    - rebornix.ruby
