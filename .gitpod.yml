@@ -5,7 +5,9 @@ tasks:
   - name: Worker
     init: |
       alias tctl="docker exec temporal-admin-tools tctl"
+      cd temporal-server
       docker-compose pull
+      cd
     command: |
       gp sync-done dockerpull
       clear
@@ -23,6 +25,7 @@ tasks:
   - name: Temporal Server
     command: |
       gp sync-await dockerpull
+      cd temporal-server
       docker-compose up
     openMode: split-right
 
