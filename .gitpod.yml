@@ -47,4 +47,5 @@ vscode:
     - ms-python.python
     - redhat.java
     - vscjava.vscode-java-test
-    - rebornix.ruby
+    - vscjava.vscode-java-debug
+    - wingrunr21.vscode-ruby
