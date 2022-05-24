@@ -27,10 +27,12 @@ tasks:
     openMode: split-right
 
 ports:
+  - port: 9200 # elastic
+    onOpen: ignore
   - port: 5432 # postgres
     onOpen: ignore
   - port: 7233 # temporal server
     onOpen: ignore
-  - port: 8080 # temporal web
+  - port: 8080 # temporal UI
     onOpen: open-preview
     visibility: public
