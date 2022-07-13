@@ -1,18 +1,15 @@
 # this is a config file for gitpod setup, ignore if you are running samples locally
 # See readme at https://github.com/temporalio/samples-typescript/blob/main/.gitpod.readme.md
 
+workspace: "~"
 tasks:
   - name: Worker
     init: |
-      alias tctl="docker exec temporal-admin-tools tctl"
       cd temporal-server
       docker-compose pull
-      cd
     command: |
       gp sync-done dockerpull
       clear
-      echo "tctl configured! try typing tctl -v"
-      echo "Use this terminal to start your worker."
   - name: Terminal
     init: |
       alias tctl="docker exec temporal-admin-tools tctl"
@@ -27,18 +24,18 @@ tasks:
       gp sync-await dockerpull
       cd temporal-server
       docker-compose up
-    openMode: split-right
+    openMode: tab-after
 
 ports:
-  - port: 5432 # postgres
+  - name: postgres
+    port: 5432
     onOpen: ignore
-  - port: 7233 # temporal server
+  - name: Temporal server
+    port: 7233
     onOpen: ignore
-  - port: 8080 # temporal UI
+  - name: Temporal Web UI
+    port: 8080 # temporal UI
     onOpen: open-preview
-    visibility: private
-  - port: 8088 # temporal legacy UI
-    onOpen: ignore
     visibility: private
 
 vscode:
