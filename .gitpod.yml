@@ -4,6 +4,7 @@
 tasks:
   - name: Worker
     init: |
+      cp .bash_aliases ~/.bash_aliases
       cd temporal-server
       docker-compose pull
     command: |
