@@ -9,11 +9,15 @@ tasks:
       docker-compose pull
     command: |
       gp sync-done dockerpull
+      source ~/.bash_aliases
       clear
+      echo "Use this terminal to start your worker."
   - name: Terminal
     command: |
+      source ~/.bash_aliases
       gp open README.md
       clear
+      echo "Use this terminal to run commands.."
     openMode: split-right
   - name: Temporal Server
     command: |
