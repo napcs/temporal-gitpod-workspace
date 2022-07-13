@@ -4,40 +4,43 @@
 tasks:
   - name: Worker
     init: |
-      alias tctl="docker exec temporal-admin-tools tctl"
+      cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
       cd temporal-server
       docker-compose pull
-      cd
     command: |
       gp sync-done dockerpull
+      echo "waiting for server...."
+      gp ports await 7233 && gp ports await 8080 && sleep 20 && gp preview http://localhost:8080
+      source ~/.bash_aliases
       clear
-      echo "tctl configured! try typing tctl -v"
       echo "Use this terminal to start your worker."
   - name: Terminal
-    init: |
-      alias tctl="docker exec temporal-admin-tools tctl"
     command: |
+      source ~/.bash_aliases
       gp open README.md
       clear
-      echo "tctl configured! try typing tctl -v"
-      echo "Use this terminal to run commands"
+      echo "Use this terminal to run commands.."
     openMode: split-right
-  - name: Temporal Server
+  - name: Temporal Local Development Server
     command: |
       gp sync-await dockerpull
       cd temporal-server
       docker-compose up
-    openMode: split-right
+    openMode: tab-after
 
 ports:
-  - port: 5432 # postgres
+  - name: postgres
+    port: 5432
     onOpen: ignore
-  - port: 7233 # temporal server
+  - name: Temporal server
+    port: 7233
     onOpen: ignore
-  - port: 8080 # temporal UI
-    onOpen: open-preview
+  - name: Temporal Web UI
+    port: 8080 # temporal UI
+    onOpen: ignore
     visibility: private
-  - port: 8088 # temporal legacy UI
+  - name: Temporal Web UI
+    port: 8088 # temporal legacy UI
     onOpen: ignore
     visibility: private
 
