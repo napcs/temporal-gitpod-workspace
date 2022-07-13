@@ -1,7 +1,6 @@
 # this is a config file for gitpod setup, ignore if you are running samples locally
 # See readme at https://github.com/temporalio/samples-typescript/blob/main/.gitpod.readme.md
 
-workspaceLocation: "~"
 tasks:
   - name: Worker
     init: |
@@ -11,13 +10,9 @@ tasks:
       gp sync-done dockerpull
       clear
   - name: Terminal
-    init: |
-      alias tctl="docker exec temporal-admin-tools tctl"
     command: |
       gp open README.md
       clear
-      echo "tctl configured! try typing tctl -v"
-      echo "Use this terminal to run commands"
     openMode: split-right
   - name: Temporal Server
     command: |
