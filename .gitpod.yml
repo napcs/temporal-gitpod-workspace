@@ -10,8 +10,7 @@ tasks:
     command: |
       gp sync-done dockerpull
       echo "waiting for server...."
-      sleep 40
-      gp preview http://localhost:8080
+      gp ports await 7233 && gp ports await 8080 && gp preview http://localhost:8080
       source ~/.bash_aliases
       clear
       echo "Use this terminal to start your worker."
