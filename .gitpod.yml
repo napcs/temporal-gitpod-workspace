@@ -4,11 +4,14 @@
 tasks:
   - name: Worker
     init: |
-      cp .bash_aliases ~/.bash_aliases
+      cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
       cd temporal-server
       docker-compose pull
     command: |
       gp sync-done dockerpull
+      echo "waiting for server...."
+      sleep 40
+      gp preview http://localhost:8080
       source ~/.bash_aliases
       clear
       echo "Use this terminal to start your worker."
@@ -19,7 +22,7 @@ tasks:
       clear
       echo "Use this terminal to run commands.."
     openMode: split-right
-  - name: Temporal Server
+  - name: Temporal Local Development Server
     command: |
       gp sync-await dockerpull
       cd temporal-server
@@ -35,7 +38,11 @@ ports:
     onOpen: ignore
   - name: Temporal Web UI
     port: 8080 # temporal UI
-    onOpen: open-preview
+    onOpen: ignore
+    visibility: private
+  - name: Temporal Web UI
+    port: 8088 # temporal legacy UI
+    onOpen: ignore
     visibility: private
 
 vscode:
