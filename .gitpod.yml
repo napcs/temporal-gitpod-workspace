@@ -4,11 +4,11 @@
 tasks:
   - name: Worker
     init: |
-      cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
       pushd temporal-server
       docker-compose pull
       popd
     command: |
+      cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
       gp sync-done dockerpull
       echo "waiting for server...."
       gp ports await 7233 && gp ports await 8080 && sleep 20 && gp preview http://localhost:8080
