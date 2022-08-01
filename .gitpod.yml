@@ -5,21 +5,22 @@ tasks:
   - name: Worker
     init: |
       cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
-      cd temporal-server
+      pushd temporal-server
       docker-compose pull
+      popd
     command: |
       gp sync-done dockerpull
       echo "waiting for server...."
       gp ports await 7233 && gp ports await 8080 && sleep 20 && gp preview http://localhost:8080
-      source ~/.bash_aliases
       clear
       echo "Use this terminal to start your worker."
+      source ~/.bash_aliases
   - name: Terminal
     command: |
-      source ~/.bash_aliases
       gp open README.md
       clear
       echo "Use this terminal to run commands.."
+      source ~/.bash_aliases
     openMode: split-right
   - name: Temporal Local Development Server
     command: |
