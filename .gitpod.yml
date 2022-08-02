@@ -1,6 +1,3 @@
-# this is a config file for gitpod setup, ignore if you are running samples locally
-# See readme at https://github.com/temporalio/samples-typescript/blob/main/.gitpod.readme.md
-
 tasks:
   - name: Worker
     init: |
