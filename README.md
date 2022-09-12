@@ -5,7 +5,7 @@ https://gitpod.io/#https://github.com/napcs/temporal-gitpod-workspace
 Clone this repository and open it with GitPod to create a workspace where you can build Temporal applications
 without setting up a local development environment.
 
-The workspace starts a Temporal development server and a preview window showing the server. It also creates a terminal window for your worker process, your general commands, and the Temporal server.
+The workspace starts a Temporal development cluster and opens a preview window showing the Temporal Web UI. It also creates a terminal window for your worker process, your general commands, and the Temporal server.
 
 
 Once the workspace is ready, you'll want the Temporal SDK for the language you're using.

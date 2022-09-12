@@ -1,14 +1,16 @@
 tasks:
   - name: Worker
     init: |
+      cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
+      go install honnef.co/go/tools/cmd/staticcheck@latest  # install staticcheck  - fix for 'Analysis Tools Missing' warning in status bar
+      go get -v -t -d ./...  # Go Get Fetcher  - see https://www.gitpod.io/docs/languages/go/#start-up-tasks
       pushd temporal-server
       docker-compose pull
       popd
     command: |
-      cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
       gp sync-done dockerpull
       echo "waiting for server...."
-      gp ports await 7233 && gp ports await 8080 && sleep 20 && gp preview http://localhost:8080
+      gp ports await 7233 && gp ports await 8080 && sleep 25 && gp preview $(gp url 8080)
       clear
       echo "Use this terminal to start your worker."
       source ~/.bash_aliases
@@ -21,23 +23,26 @@ tasks:
     openMode: split-right
   - name: Temporal Local Development Server
     command: |
-      gp sync-await dockerpull
+      gp sync-await dockerpull #wait for docker server to be up
+      source ~/.bash_aliases
       cd temporal-server
       docker-compose up
     openMode: tab-after
 
 ports:
-  - name: postgres
+  - name: Postgres (for Temporal Cluster)
     port: 5432
     onOpen: ignore
-  - name: Temporal server
+  - name: Temporal Server
     port: 7233
     onOpen: ignore
-  - name: Temporal Web UI
+  - name: Temporal Web UI v2
     port: 8080 # temporal UI
+    description: New (v2) Temporal Web UI
     onOpen: ignore
     visibility: private
-  - name: Temporal Web UI
+  - name: Temporal Web UI v1
+    description: Old (v1) Temporal Web UI
     port: 8088 # temporal legacy UI
     onOpen: ignore
     visibility: private
@@ -50,3 +55,6 @@ vscode:
     - vscjava.vscode-java-test
     - vscjava.vscode-java-debug
     - wingrunr21.vscode-ruby
+    - ms-toolsai.jupyter
+    - ms-toolsai.jupyter-keymap
+    - ms-toolsai.jupyter-renderers
