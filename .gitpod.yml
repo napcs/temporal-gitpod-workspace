@@ -5,7 +5,9 @@ tasks:
   - name: install staticcheck
     init: go install honnef.co/go/tools/cmd/staticcheck@latest  # fix for 'Analysis Tools Missing' warning in status bar
   - name: install Temporal CLI
-    init: curl -sSf https://temporal.download/cli.sh | sh
+    init: |
+      curl -sSf https://temporal.download/cli.sh | sh
+
   - name: Worker
     command: |
       echo "waiting for server...."
