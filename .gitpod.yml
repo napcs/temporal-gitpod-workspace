@@ -4,13 +4,10 @@ tasks:
     init: cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
   - name: install staticcheck
     init: go install honnef.co/go/tools/cmd/staticcheck@latest  # fix for 'Analysis Tools Missing' warning in status bar
+  - name: install Temporal CLI
+    init: curl -sSf https://temporal.download/cli.sh | sh
   - name: Worker
-    init: |
-      pushd temporal-server
-      docker-compose pull
-      popd
     command: |
-      gp sync-done dockerpull
       echo "waiting for server...."
       gp ports await 7233 && gp ports await 8080 && sleep 25 && gp preview $(gp url 8080)
       clear
@@ -25,9 +22,8 @@ tasks:
     openMode: split-right
   - name: Temporal Local Development Server
     command: |
-      gp sync-await dockerpull
-      cd temporal-server
-      docker-compose up
+      source .bash_aliases
+      temporal server start-dev --ui-port 8080
     openMode: tab-after
 
 ports:
