@@ -4,8 +4,6 @@ tasks:
     init: cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
   - name: install staticcheck
     init: go install honnef.co/go/tools/cmd/staticcheck@latest  # fix for 'Analysis Tools Missing' warning in status bar
-  - name: Go Get Fetcher # https://www.gitpod.io/docs/languages/go/#start-up-tasks
-    init: go get -v -t -d ./...
   - name: Worker
     init: |
       pushd temporal-server
