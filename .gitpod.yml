@@ -7,6 +7,12 @@ tasks:
   - name: install Temporal CLI
     init: |
       curl -sSf https://temporal.download/cli.sh | sh
+  - name: install tctl for backwards compat
+    init: |
+      curl -sL -O https://github.com/temporalio/tctl/releases/download/v1.18.0/tctl_1.18.0_linux_amd64.tar.gz
+      tar zxvf tctl_1.18*
+      mv tctl /home/gitpod/.temporalio/bin/tctl
+      chmod +x /home/gitpod/.temporalio/bin/tctl
 
   - name: Worker
     command: |
@@ -25,7 +31,7 @@ tasks:
   - name: Temporal Local Development Server
     command: |
       source .bash_aliases
-      temporal server start-dev --ui-port 8080
+      temporal server start-dev --db-filename your_temporal.db --ui-port 8080
     openMode: tab-after
 
 ports:
