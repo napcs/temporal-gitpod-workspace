@@ -1,20 +1,18 @@
 image: gitpod/workspace-full:2023-01-16-03-31-28
 tasks:
-  - name: Set up aliases
-    init: cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
-  - name: install staticcheck
-    init: go install honnef.co/go/tools/cmd/staticcheck@latest  # fix for 'Analysis Tools Missing' warning in status bar
-  - name: install Temporal CLI
+  - name: Worker
     init: |
+      cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
+      # install staticcheck
+      go install honnef.co/go/tools/cmd/staticcheck@latest  # fix for 'Analysis Tools Missing' warning in status bar
+      # install temporal cli
       curl -sSf https://temporal.download/cli.sh | sh
       gp sync-done temporal-cli
-  - name: install tctl for backwards compat
-    init: |
+      # install tctl for backwards compat
       curl -sL -O https://github.com/temporalio/tctl/releases/download/v1.18.0/tctl_1.18.0_linux_amd64.tar.gz
       tar zxvf tctl_1.18*
       mv tctl /home/gitpod/.temporalio/bin/tctl
       chmod +x /home/gitpod/.temporalio/bin/tctl
-  - name: Worker
     command: |
       echo "waiting for server...."
       gp ports await 7233 && gp ports await 8080 && sleep 25 && gp preview $(gp url 8080)
