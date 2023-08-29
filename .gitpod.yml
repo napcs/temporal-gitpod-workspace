@@ -7,7 +7,7 @@ tasks:
   - name: install Temporal CLI
     init: |
       curl -sSf https://temporal.download/cli.sh | sh
-      gp-done temporal-cli
+      gp sync-done temporal-cli
   - name: install tctl for backwards compat
     init: |
       curl -sL -O https://github.com/temporalio/tctl/releases/download/v1.18.0/tctl_1.18.0_linux_amd64.tar.gz
@@ -21,6 +21,7 @@ tasks:
       clear
       source .bash_aliases
       echo "Use this terminal to start your worker."
+    openMode: split-right
   - name: Terminal
     command: |
       gp open README.md
@@ -31,7 +32,7 @@ tasks:
   - name: Temporal Local Development Server
     command: |
       source .bash_aliases
-      gp-await temporal-cli
+      gp sync-await temporal-cli
       temporal server start-dev --db-filename your_temporal.db --ui-port 8080
     openMode: tab-after
 
