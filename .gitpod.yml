@@ -5,9 +5,6 @@ tasks:
       cp .bash_aliases ~/.bash_aliases   # ensure new terminals also have access to tctl
       # install staticcheck
       go install honnef.co/go/tools/cmd/staticcheck@latest  # fix for 'Analysis Tools Missing' warning in status bar
-      # install temporal cli
-      curl -sSf https://temporal.download/cli.sh | sh
-      gp sync-done temporal-cli
       # install tctl for backwards compat
       curl -sL -O https://github.com/temporalio/tctl/releases/download/v1.18.0/tctl_1.18.0_linux_amd64.tar.gz
       tar zxvf tctl_1.18*
@@ -28,9 +25,11 @@ tasks:
       source .bash_aliases
     openMode: split-right
   - name: Temporal Local Development Server
+    init:
+      # install temporal cli
+      curl -sSf https://temporal.download/cli.sh | sh
     command: |
       source .bash_aliases
-      gp sync-await temporal-cli
       temporal server start-dev --db-filename your_temporal.db --ui-port 8080
     openMode: tab-after
 
