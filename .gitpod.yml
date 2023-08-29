@@ -30,7 +30,7 @@ tasks:
       curl -sSf https://temporal.download/cli.sh | sh
     command: |
       source .bash_aliases
-      temporal server start-dev --db-filename your_temporal.db --ui-port 8080
+      /home/gitpod/.temporalio/bin/temporal server start-dev --db-filename your_temporal.db --ui-port 8080
     openMode: tab-after
 
 ports:
